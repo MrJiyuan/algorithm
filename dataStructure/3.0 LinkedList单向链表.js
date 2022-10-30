@@ -28,6 +28,26 @@ function LinkedList() {
 
     // method:toString
     LinkedList.prototype.toString = function () {
-
+        // 定义变量
+        var current = this.head
+        var listSting = ''
+        while (current) {
+            listSting += current.data + ''
+            current = current.next
+        }
+        return ''
     }
+
 }
+// method:testToString
+var list = new LinkedList()
+list.append('abc')
+list.append('def')
+console.log(list);
+// LinkedList {
+//     head: Node {
+//         data: 'abc',
+//         next: Node { data: 'def', next: null }
+//     },
+//     length: 2
+// }

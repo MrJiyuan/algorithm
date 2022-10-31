@@ -38,11 +38,35 @@ function LinkedList() {
         return ''
     }
 
+    // method:insert
+    LinkedList.prototype.insert = function (position, data) {
+        // 对position进行越界判断
+        if (position < 0 && position > this.length) return false
+        var newNode = new Node(data)
+        if (position == 0) { // 插入position=0的位置
+            newNode.next = this.head
+            this.head = newNode
+        } else {
+            var previous = null     // 指定位置前的节点设为previous
+            var current = this.head // 指定位置上的节点设为current
+            var i = 0
+            while (i++ < position) {// 遍历到指定位置
+                previous = current
+                current = current.next
+            }
+            newNode.next = current // 让newNode的next指向原本在这个位置的node
+            previous.next = newNode// 让原本这个位置前的node的next指向newNode
+        }
+        // length+1
+        this.length += 1
+        return true
+    }
 }
 // method:testToString
 var list = new LinkedList()
 list.append('abc')
 list.append('def')
+list.insert(1, 'ghi')
 console.log(list);
 // LinkedList {
 //     head: Node {

@@ -1,3 +1,10 @@
+/**
+ * @ Author: Chr1s
+ * @ Create Time: 2022-10-31 03:19:19
+ * @ Modified time: 2022-11-02 03:59:50
+ * @ Description:
+ */
+
 // 每个元素不再只是一个数据，还包含优先级。
 // 在添加元素过程中，根据优先级放入到正确位置。
 class QueueElement {

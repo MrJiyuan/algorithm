@@ -1,7 +1,7 @@
 /**
  * @ Author: Chr1s
  * @ Create Time: 2022-10-31 03:19:19
- * @ Modified time: 2022-11-02 23:59:14
+ * @ Modified time: 2022-11-04 10:44:48
  * @ Description:
  */
 // 只能从头部遍历到尾部 or 从尾部遍历到头部
@@ -9,135 +9,143 @@
 // 可以轻松到达下一个节点，但是回到前一个节点是很难的，实际开发中经常需要回到上一个节点
 // 举例：一个文本编辑器用链表储存文本，每行用一个string对象储存在链表的一个节点中，当编辑器用户向下移动光标时，链表直接操作到下一个节点即可，但当光标向上移动时，我们可能需要从first开始，重新依次走到想要的节点上
 
-function LinkedList() {
-    // 内部类：节点类
-    function Node(data, next) {
-        this.data = data
-        this.next = null
-    }
-    this.head = null
-    this.length = 0 // 记录链表的长度
+class LinkedList {
+    constructor() {
+        // 内部类：节点类
+        function Node(data, next) {
+            this.data = data;
+            this.next = null;
+        }
+        this.head = null;
+        this.length = 0; // 记录链表的长度
 
-    // method:append 向链表的末尾追加节点(找到next指向null的节点(末尾)，然后添加新节点，然后让前一个节点的next指向新加入的节点)
-    LinkedList.prototype.append = function (data) {
-        // 创建一个新节点
-        var newNode = new Node(data)
-        // 判断添加的是否是第一个节点
-        if (this.length == 0) {
-            this.head = newNode
-        } else {
-            // 使用current遍历链表上的节点直到遍历到最后一个(next===null)
-            var current = this.head
-            while (current.next) {
-                current = current.next
+
+        // method:append 向链表的末尾追加节点(找到next指向null的节点(末尾)，然后添加新节点，然后让前一个节点的next指向新加入的节点)
+        LinkedList.prototype.append = function (data) {
+            // 创建一个新节点
+            var newNode = new Node(data);
+            // 判断添加的是否是第一个节点
+            if (this.length == 0) {
+                this.head = newNode;
+            } else {
+                // 使用current遍历链表上的节点直到遍历到最后一个(next===null)
+                var current = this.head;
+                while (current.next) {
+                    current = current.next;
+                }
+                // 让最后一个节点的next指向新节点
+                current.next = newNode;
             }
-            // 让最后一个节点的next指向新节点
-            current.next = newNode
-        }
-        this.length += 1;
-    };
+            this.length += 1;
+        };
 
-    // method:toString
-    LinkedList.prototype.toString = function () {
-        // 定义变量
-        var current = this.head
-        var listSting = ''
-        while (current) {
-            listSting += current.data + ''
-            current = current.next
-        }
-        return ''
-    }
-
-    // method:insert 在指定位置插入新节点
-    LinkedList.prototype.insert = function (position, data) {
-        // 对position进行越界判断
-        if (position < 0 || position > this.length) return false
-        var newNode = new Node(data)
-        if (position == 0) { // 插入position=0的位置
-            newNode.next = this.head
-            this.head = newNode
-        } else {
-            var previous = null     // 指定位置前的节点设为previous
-            var current = this.head // 指定位置上的节点设为current
-            var i = 0
-            while (i++ < position) {// 遍历到指定位置
-                previous = current
-                current = current.next
+        // method:toString
+        LinkedList.prototype.toString = function () {
+            // 定义变量
+            var current = this.head;
+            var listSting = '';
+            while (current) {
+                listSting += current.data + '';
+                current = current.next;
             }
-            newNode.next = current // 让newNode的next指向原本在这个位置的node
-            previous.next = newNode// 让原本这个位置前的node的next指向newNode
-        }
-        // length+1
-        this.length += 1
-        return true
-    }
+            return '';
+        };
 
-    // method:update 修改指定位置的元素
-    LinkedList.prototype.update = function (position, newData) {
-        // 对position进行越界判断
-        if (position < 0 || position >= this.length) return false
-        var current = this.head
-        var i = 0
-        while (i++ < position) {
-            current = current.next
-        }
-        current.data = newData
-        return true
-    }
-
-    // method:get 获取指定索引的元素
-    LinkedList.prototype.get = function (position) {
-        if (position < 0 || position >= this.length) return null
-        var current = this.head
-        var i = 0
-        while (i++ < position) {
-            current = current.next
-        }
-        return current.data
-    }
-
-    // method:indexOf 返回元素在列表中的索引，若没有该元素则返回-1
-    LinkedList.prototype.indexOf = function (element) {
-        var current = this.head
-        var i = 0
-        while (i++ < this.length) {
-            if (current.data === element) {
-                return i
+        // method:insert 在指定位置插入新节点
+        LinkedList.prototype.insert = function (position, data) {
+            // 对position进行越界判断
+            if (position < 0 || position > this.length)
+                return false;
+            var newNode = new Node(data);
+            if (position == 0) { // 插入position=0的位置
+                newNode.next = this.head;
+                this.head = newNode;
+            } else {
+                var previous = null; // 指定位置前的节点设为previous
+                var current = this.head; // 指定位置上的节点设为current
+                var i = 0;
+                while (i++ < position) { // 遍历到指定位置
+                    previous = current;
+                    current = current.next;
+                }
+                newNode.next = current; // 让newNode的next指向原本在这个位置的node
+                previous.next = newNode; // 让原本这个位置前的node的next指向newNode
             }
-            current = current.next
-        }
-        return -1
-    }
+            // length+1
+            this.length += 1;
+            return true;
+        };
 
-    // method:removeAt 从列表的特定位置移除一项
-    LinkedList.prototype.removeAt = function (position) {
-        if (position < 0 || position >= this.length) return false
-        var current = this.head
-        var previous = null // 指定位置的前一个元素
-        // 1 若删除的是第一个元素
-        if (position === 0) {
-            this.head = this.head.next // 让head直接指向后一个节点
-        } else {// 2 若删除的是中间的元素
-            var i = 0
+        // method:update 修改指定位置的元素
+        LinkedList.prototype.update = function (position, newData) {
+            // 对position进行越界判断
+            if (position < 0 || position >= this.length)
+                return false;
+            var current = this.head;
+            var i = 0;
             while (i++ < position) {
-                previous = current
-                current = current.next
+                current = current.next;
             }
-            previous.next = current.next
-        }
-        // 长度减一
-        this.length -= 1
-        return current.data
-    }
+            current.data = newData;
+            return true;
+        };
 
-    // method:remove   从列表中移除一项
-    LinkedList.prototype.remove = function (element) {
-        return this.removeAt(
-            this.indexOf(element)
-        )
-    }
+        // method:get 获取指定索引的元素
+        LinkedList.prototype.get = function (position) {
+            if (position < 0 || position >= this.length)
+                return null;
+            var current = this.head;
+            var i = 0;
+            while (i++ < position) {
+                current = current.next;
+            }
+            return current.data;
+        };
 
+        // method:indexOf 返回元素在列表中的索引，若没有该元素则返回-1
+        LinkedList.prototype.indexOf = function (element) {
+            var current = this.head;
+            var i = 0;
+            while (i++ < this.length) {
+                if (current.data === element) {
+                    return i;
+                }
+                current = current.next;
+            }
+            return -1;
+        };
+
+        // method:removeAt 从列表的特定位置移除一项
+        LinkedList.prototype.removeAt = function (position) {
+            if (position < 0 || position >= this.length)
+                return false;
+            var current = this.head;
+            var previous = null; // 指定位置的前一个元素
+
+            // 1 若删除的是第一个元素
+            if (position === 0) {
+                this.head = this.head.next; // 让head直接指向后一个节点
+            } else { // 2 若删除的是中间的元素
+                var i = 0;
+                while (i++ < position) {
+                    previous = current;
+                    current = current.next;
+                }
+                previous.next = current.next;
+            }
+            // 长度减一
+            this.length -= 1;
+            return current.data;
+        };
+
+        // method:remove   从列表中移除一项
+        LinkedList.prototype.remove = function (element) {
+            return this.removeAt(
+                this.indexOf(element)
+            );
+        };
+
+    }
 }
 // method:testToString
 var list = new LinkedList()

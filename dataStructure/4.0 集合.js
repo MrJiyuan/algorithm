@@ -1,7 +1,7 @@
 /**
  * @ Author: Chr1s
  * @ Create Time: 2022-11-07 23:25:45
- * @ Modified time: 2022-11-08 00:20:26
+ * @ Modified time: 2022-11-08 14:04:26
  * @ Description:
  */
 
@@ -49,6 +49,60 @@ class Set {
     // method:values() 获取集合中所有的 value
     values() {
         return Object.keys(this.items);
+    }
+
+    // union() 求两个集合的并集
+    union(otherSet) {
+        // 1、创建一个新集合
+        let unionSet = new Set();
+        // 2、将当前集合（this）的所有 value，添加到新集合（unionSet）中
+        for (let value of this.values()) {
+            unionSet.add(value);
+        }
+        // 3、将 otherSet 集合的所有 value，添加到新集合（unionSet）中
+        for (let value of otherSet.values()) {
+            unionSet.add(value); // add() 已经有重复判断
+        }
+        return unionSet;
+    }
+
+    // intersection() 求两个集合的交集
+    intersection(otherSet) {
+        // 1、创建一个新集合
+        let intersectionSet = new Set();
+        // 2、从当前集合中取出每一个 value，判断是否在 otherSet 集合中存在
+        for (let value of this.values()) {
+            if (otherSet.has(value)) {
+                intersectionSet.add(value);
+            }
+        }
+
+        return intersectionSet;
+    }
+
+    // difference() 差集
+    difference(otherSet) {
+        // 1、创建一个新集合
+        let differenceSet = new Set();
+        // 2、从当前集合中取出每一个 value，判断是否在 otherSet 集合中存在，不存在的即为差集
+        for (let value of this.values()) {
+            if (!otherSet.has(value)) {
+                differenceSet.add(value);
+            }
+        }
+        return differenceSet;
+    }
+
+    // subset() 子集
+    subset(otherSet) {
+        // 从当前集合中取出每一个 value，判断是否在 otherSet 集合中存在，有不存在的返回 false
+        // 遍历完所有的，返回 true
+        for (let value of this.values()) {
+            if (!otherSet.has(value)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

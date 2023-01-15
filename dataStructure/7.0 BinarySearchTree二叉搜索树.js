@@ -1,7 +1,7 @@
 /**
  * @ Author: Chr1s
  * @ Create Time: 2022-11-23 07:00:19
- * @ Modified time: 2023-01-12 22:07:47
+ * @ Modified time: 2023-01-13 18:18:27
  * @ Description:
  */
 
@@ -27,6 +27,9 @@
 // 1、非空左子树的所有键值<根节点的键值
 // 2、非空右子树的所有键值>根节点的键值
 // 3、左右子树都是二叉搜索树
+
+// 非平衡树：连续插入数据后，分布的不均匀，就是非平衡树
+// 平衡二叉树的查询效率是O(logN),非平衡二叉树的是O(N)
 
 class Node {
     constructor(keys) {
@@ -209,7 +212,20 @@ class BinarySearchTree {
         // 3) 删除有两个子节点的节点
         // 需要从下面的子节点中找到一个节点，来替换当前的节点，这个节点应该是current节点下面所有节点中最接近current节点的
         // 规律：比current小一点点的节点,一定是current左子树的最大值(前驱);比current大一点点的节点,一定是current右子树的最小值(后继)
-
+        else {
+            // 获取后继节点
+            var successor = this.getSuccessor(current)
+            // 判断是否为根节点
+            if (current == this.root) {
+                this.root = successor
+            } else if (isLeftChild) {
+                parent.left = successor
+            } else {
+                parent.right = successor
+            }
+            // 将删除节点的左子树=current.left
+            successor.left = current.left
+        }
 
 
     }

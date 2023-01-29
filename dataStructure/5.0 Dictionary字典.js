@@ -1,6 +1,5 @@
 // 有序的，允许数据重复
-class Map {
-
+class Dictionary {
     constructor() {
         this.items = {};
     }

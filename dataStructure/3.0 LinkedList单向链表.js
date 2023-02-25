@@ -1,7 +1,7 @@
 /**
  * @ Author: Chr1s
  * @ Create Time: 2022-10-31 03:19:19
- * @ Modified time: 2022-11-04 10:44:48
+ * @ Modified time: 2023-02-25 20:40:06
  * @ Description:
  */
 // 只能从头部遍历到尾部 or 从尾部遍历到头部
@@ -12,9 +12,11 @@
 class LinkedList {
     constructor() {
         // 内部类：节点类
-        function Node(data, next) {
-            this.data = data;
-            this.next = null;
+        class Node {
+            constructor(data, next) {
+                this.data = data;
+                this.next = null;
+            }
         }
         this.head = null;
         this.length = 0; // 记录链表的长度
